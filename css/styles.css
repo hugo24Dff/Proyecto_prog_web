@@ -15,3 +15,22 @@
         text-align: right;
         font: bolt;
     }
+
+    @font-face {    
+    font-family: "Roboto Slab", serif;
+    src: url(../assets/fonts/Roboto_Slab/RobotoSlab-VariableFont_wght.ttf);
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    }
+
+    @font-face {    
+    font-family: "Orbitron", serif;
+    src: url(../assets/fonts/Orbitron/Orbitron-VariableFont_wght.ttf);
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    }
+    

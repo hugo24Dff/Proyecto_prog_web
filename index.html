@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="css/styles.css">
     <meta charset="UTF-8" />
     <meta
       name="description"
@@ -13,19 +12,56 @@
     <link rel="alternate" hreflang="es" href="https://www.TEKHSTORE.com/" />
     <title>TEKHSTORE: Tienda digital de Videojuegos</title>
 
-    <style>
-        #morado-negrita{
-            color: violet;
-            font: bold;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+   
+   <style>
+
+    body {
+        background-color: rgb(105, 0, 105);
+        color: aliceblue;
+
+    }
+
+    .juego {
+        color: rgb(0, 255, 110);
+        font-size: 20px;
+        font-style: italic;
+    }
+
+    h2 { 
+        color: white; 
+        text-align: center; 
+    }
+
+    link {
+        color: white;
+    }
+
+    #header { 
+        background-color: rgb(46, 2, 62); 
+        border: 2px solid white;
+    }
+
+    * {
+        font-family: Arial, sans-serif;
+        margin: 10;
+        padding: 5;
+    }
+
+  </style>
   </head>
 
   <body>
     <header id="header">
       <h1><span></span>TEKHSTORE.com</h1>
       <nav>
-        <a href="/index.html">Inicio</a>
+        <a href="/index.html" class="link">Inicio</a>
         <a href="/pages/offers.html" title="Las ofertas de hoy">Ofertas </a>
         <a
           href="/pages/recomendations.html"
@@ -80,7 +116,7 @@
             loading="lazy"
             title="Rainbow Six Siege"
           />
-          <figcaption>Rainbow Six Siege</figcaption>
+          <figcaption class="juego">Rainbow Six Siege</figcaption>
         </figure>
 
         <figure>
@@ -92,7 +128,7 @@
             loading="lazy"
             title="The King Of Fighters XV"
           />
-          <figcaption>The King Of Fighters XV</figcaption>
+          <figcaption class="juego">The King Of Fighters XV</figcaption>
         </figure>
 
         <figure>
@@ -104,18 +140,18 @@
             loading="lazy"
             title="Batman Arkham Knight"
           />
-          <figcaption>Batman Arkham Knight</figcaption>
+          <figcaption class="juego">Batman Arkham Knight</figcaption>
         </figure>
 
         <h3><b>Ver todo</b></h3>
       </section>
     </main>
 
-    <footer id="morado-negrita">
+    <footer>
       <hr />
       <pre>
-            Universidad Autónoma de Baja California Sur.
-            Departamento Académico de Sistemas Computacionales.
+            <strong>Universidad Autónoma de Baja California Sur.</strong>
+            <strong>Departamento Académico de Sistemas Computacionales.</strong>
             Diseño creado por:
             Emiliano Angulo Martínez.
             Hugo Enrique Gómez Famania.
