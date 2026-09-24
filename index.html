@@ -7,43 +7,49 @@
       content="Explora, descarga y disfruta los mejores videojuegos digitales con ofertas exclusivas cada semana."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <meta name="robots" content="index, follow" />
+    
     <link rel="canonical" href="https://www.TEKHSTORE.com/" />
+    
     <link rel="alternate" hreflang="es" href="https://www.TEKHSTORE.com/" />
-    <title>TEKHSTORE: Tienda digital de Videojuegos</title>
+    
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
 
-    <style>
+   <title>TEKHSTORE: Tienda digital de Videojuegos</title>
 
+  <style>
     body {
-        background-color: rgb(105, 0, 105);
+        background-color: rgb(63 0 184);
+        font-family: 'Roboto Slab', serif;
         color: aliceblue;
 
     }
 
-    .juego {
-        color: rgb(0, 255, 110);
-        font-size: 20px;
-        font-style: italic;
+    .juego { 
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        font-family: 'Roboto Slab', serif;
+    } 
+    
+    .juego-figure {
+        margin: 0;
+        text-align: center;
+        font-family: 'Roboto Slab', serif;
     }
 
     h2 { 
         color: white; 
-        text-align: center; 
-    }
-
-    link {
-        color: white;
+        text-align: center;
+        font-family: 'Orbitron', sans-serif;
     }
 
     #header { 
-        background-color: rgb(46, 2, 62); 
-        border: 2px solid white;
-    }
-
-    * {
-        font-family: Arial, sans-serif;
-        margin: 10;
-        padding: 5;
+        background-color: rgb(37 0 107); 
+        font-family: 'Orbitron', sans-serif;
     }
 
   </style>
@@ -79,6 +85,7 @@
     <main>
       <section>
         <h2><strong>JUEGO DE LA SEMANA</strong></h2>
+
         <figure>
           <img
             src="assets/img/star-wars-battlefront-2.jpg"
@@ -87,9 +94,8 @@
             height=""
             title="Star Wars Battlefront 2"
           />
-          <figcaption>Star Wars Battlefront 2</figcaption>
-        </figure>
-
+          <figcaption class="juego">Star Wars Battlefront 2</figcaption>
+        </figure> 
         <h3>
           <strong><u>Comprar Ahora</u></strong>
         </h3>
@@ -99,43 +105,45 @@
 
       <section>
         <h2><strong>Juegos Populares</strong></h2>
-        <figure>
-          <img
-            src="assets/img/rainbow-six-siege.jpg"
-            alt="Rainbow Six Siege"
-            width="300"
-            height="175"
-            loading="lazy"
-            title="Rainbow Six Siege"
-          />
-          <figcaption class="juego">Rainbow Six Siege</figcaption>
-        </figure>
+        <div class="juego">
+          <figure>
+            <img
+              src="assets/img/rainbow-six-siege.jpg"
+              alt="Rainbow Six Siege"
+              width="300"
+              height="175"
+              loading="lazy"
+              title="Rainbow Six Siege"
+            />
+            <figcaption class="juego-figure">Rainbow Six Siege</figcaption>
+          </figure>
 
-        <figure>
-          <img
-            src="assets/img/kof-xv.webp"
-            alt="The King Of Fighters XV"
-            width="300"
-            height="175"
-            loading="lazy"
-            title="The King Of Fighters XV"
-          />
-          <figcaption class="juego">The King Of Fighters XV</figcaption>
-        </figure>
+          <figure>
+            <img
+              src="assets/img/kof-xv.webp"
+              alt="The King Of Fighters XV"
+              width="300"
+              height="175"
+              loading="lazy"
+              title="The King Of Fighters XV"
+            />
+            <figcaption class="juego-figure">The King Of Fighters XV</figcaption>
+          </figure>
 
-        <figure>
-          <img
-            src="assets/img/arkham-knight.png"
-            alt="Batman Arkham Knight"
-            width="300"
-            height="175"
-            loading="lazy"
-            title="Batman Arkham Knight"
-          />
-          <figcaption class="juego">Batman Arkham Knight</figcaption>
-        </figure>
+          <figure>
+            <img
+              src="assets/img/arkham-knight.png"
+              alt="Batman Arkham Knight"
+              width="300"
+              height="175"
+              loading="lazy"
+              title="Batman Arkham Knight"
+            />
+            <figcaption class="juego-figure">Batman Arkham Knight</figcaption>
+          </figure>
 
-        <h3><b>Ver todo</b></h3>
+          <h3><b>Ver todo</b></h3>
+        </div>
       </section>
     </main>
 
@@ -152,3 +160,4 @@
     </footer>
   </body>
 </html>
+  
