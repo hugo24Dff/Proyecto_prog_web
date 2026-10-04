@@ -1,0 +1,74 @@
+/* =========================
+   1. TARJETAS DE VIDEOJUEGOS
+   ========================= */
+
+.juego figure {
+    background-color: rgb(63 0 184);
+    border: 2px solid rgb(150 100 255);
+    border-radius: 12px;
+    padding: 15px;
+    margin: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.45);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.juego figure:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.juego figure img {
+    border-radius: 8px;
+    display: block;
+}
+
+nav a {
+    display: inline-block;
+    background-color: rgb(63 0 184);
+    color: white;
+    text-decoration: none;
+
+    padding: 10px 16px;
+    margin: 5px;
+
+    border: 2px solid rgb(150 100 255);
+    border-radius: 8px;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+
+    transition: background-color 0.3s ease,
+                transform 0.3s ease;
+}
+
+
+nav a:hover {
+    background-color: rgb(100 40 220);
+    transform: translateY(-2px);
+}
+
+section:first-of-type figure {
+    background-color: rgb(63 0 184);
+    border: 3px solid rgb(150 100 255);
+    border-radius: 15px;
+
+    padding: 20px;
+    margin: 20px auto;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.55);
+
+    max-width: 1400px;
+    box-sizing: border-box;
+}
+
+section:first-of-type figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+}
+
+section:first-of-type figcaption {
+    padding: 12px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+}
