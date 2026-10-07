@@ -32,7 +32,7 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="../css/box-model.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
 
     <title>TEKHSTORE: Tienda digital de Videojuegos</title>
 
@@ -50,9 +50,17 @@
       }
 
       .site-header {
+        /*display: flex;
+        justify-content: right;*/
+
+        position: sticky;
+        top: 0;
+        height: var(--header-top);
+        z-index: 10;
+
+
         background-color: rgb(37, 0, 107);
         font-family: "Orbitron", sans-serif;
-        position: relative;
       }
 
       /* Pseudoelemento */
@@ -97,6 +105,7 @@
           Perfil
         </a>
 
+        <!--
         <a
           href="https://github.com/hugo24Dff/Proyecto_prog_web"
           class="nav__link"
@@ -106,9 +115,10 @@
         >
           Repositorio GitHub
         </a>
+        -->
       </nav>
 
-      <hr />
+      <hr/>
     </header>
 
     <main>
