@@ -1,114 +1,279 @@
-/* TARJETAS DE VIDEOJUEGOS */
-.game-card {
-    background-color: rgb(63 0 184);
-    border: 2px solid rgb(150 100 255);
-    border-radius: 12px;
-    padding: 15px;
-    margin: 10px;
-
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.45);
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+/* --- RESET Y VARIABLES --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* Pseudoclase :hover */
-.game-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+body {
+  background-color: rgb(37, 0, 107);
+  color: aliceblue;
+  font-family: 'Roboto Slab', serif;
 }
 
-.game-card__image {
-    border-radius: 8px;
-    display: block;
+h2 {
+  color: white;
+  font-family: "Orbitron", sans-serif;
 }
 
-
-.game-card__caption {
-    font-family: "Orbitron", sans-serif;
-    text-align: center;
-    padding: 10px;
+/* 3. LAYOUT GENERAL CON CSS GRID */
+.page-layout {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
 }
 
-/* NAVEGACIÓN */
-nav {
-    display: flex;
-    align-items: center;
+.site-header {
+  grid-area: header;
+  background-color: rgb(37, 0, 107);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.nav__link {
-    display: inline-block;
-
-    background-color: rgb(63 0 184);
-    color: white;
-
-    text-decoration: none;
-
-    padding: 10px 16px;
-    margin: 5px;
-
-    border: 2px solid rgb(150 100 255);
-    border-radius: 8px;
-
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
-
-    transition:
-        background-color 0.3s ease,
-        transform 0.3s ease;
+.site-header::before {
+  content: "";
+  display: block;
+  height: 4px;
+  background-color: rgb(150, 100, 255);
 }
 
-.nav__link:last-child {
-    margin-left:auto;
-}
-
-/* Pseudoclase :hover */
-.nav__link:hover {
-    background-color: rgb(100 40 220);
-    transform: translateY(-2px);
-}
-
-
-/* JUEGO DESTACADO */
-.game-card--featured {
-    border: 3px solid rgb(150 100 255);
-    border-radius: 15px;
-
-    padding: 20px;
-    margin: 20px auto;
-
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.55);
-
-    max-width: 1400px;
-    box-sizing: border-box;
-}
-
-.game-card--featured .game-card__image {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 10px;
-}
-
-.game-card--featured .game-card__caption {
-    padding: 12px;
-    font-family: "Orbitron", sans-serif;
-    font-size: 1.2rem;
-}
-
-/* LISTA DE JUEGOS */
-.games__list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.games__view-all {
-    width: 100%;
-    text-align: center;
+.site-main {
+  grid-area: main;
+  padding: 20px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .site-footer {
-    background-color: rgb(30, 30, 30);
+  grid-area: footer;
+  background-color: rgb(30, 30, 30);
+  padding: 20px;
+  text-align: center;
+}
+
+/* 1. NAVBAR CON FLEXBOX */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 20px;
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.site-logo .logo__text span {
+  color: #8c8c8c;
+  font-size: 0.9rem;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #0d002a;
+  border: 1px solid rgb(150, 100, 255);
+  border-radius: 6px;
+  padding: 6px 12px;
+  width: 300px;
+}
+
+.search-bar__input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  width: 100%;
+  margin-left: 8px;
+  font-size: 0.85rem;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav__links {
+  display: flex;
+  gap: 15px;
+}
+
+.nav__link {
+  display: inline-block;
+  background-color: rgb(63 0 184);
+  color: white;
+  text-decoration: none;
+  padding: 10px 16px;
+  border: 2px solid rgb(150 100 255);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.75rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav__link:hover {
+  background-color: rgb(100 40 220);
+  transform: translateY(-2px);
+}
+
+.nav__user-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-btn {
+  background-color: rgb(63 0 184);
+  border: 2px solid rgb(150 100 255);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  color: #fff;
+}
+
+.icon-btn .badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #ff2a6d;
+  color: #fff;
+  font-size: 0.65rem;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgb(63 0 184);
+  border: 2px solid rgb(150 100 255);
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.user-profile__name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* HERO BANNER */
+.hero-banner {
+  border: 3px solid rgb(150 100 255);
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.55);
+}
+
+.hero-banner__image-container {
+  position: relative;
+  width: 100%;
+}
+
+.hero-banner__image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-banner__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 40px;
+}
+
+.hero-banner__btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+/* SECCIÓN JUEGOS POPULARES */
+.trending-section__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.btn-view-all {
+  background-color: rgb(63 0 184);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 2px solid rgb(150 100 255);
+  font-family: "Orbitron", sans-serif;
+}
+
+/* 2. LISTADO FLEXIBLE (flex-wrap, gap y flex: 1 1 sin márgenes manuales) */
+.games__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.game-card {
+  background-color: rgb(63 0 184);
+  border: 2px solid rgb(150 100 255);
+  border-radius: 12px;
+  padding: 15px;
+  flex: 1 1 280px;
+  max-width: 320px;
+  margin: 0;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.45);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.game-card__image {
+  border-radius: 8px;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.game-card__caption {
+  font-family: "Orbitron", sans-serif;
+  text-align: center;
+  padding: 10px;
 }

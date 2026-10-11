@@ -1,224 +1,109 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Explora, descarga y disfruta los mejores videojuegos digitales con ofertas exclusivas cada semana." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <title>TEKHSTORE: Tienda digital de Videojuegos</title>
+</head>
+<body class="page-layout">
 
-    <meta
-      name="description"
-      content="Explora, descarga y disfruta los mejores videojuegos digitales con ofertas exclusivas cada semana."
-    />
+  <!-- HEADER / NAVBAR -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="/index.html" class="site-logo">
+        <span class="logo__icon">⚙</span>
+        <span class="logo__text">TEKHSTORE<span>.COM</span></span>
+      </a>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <div class="search-bar">
+        <span class="search-bar__icon">🔍</span>
+        <input type="text" placeholder="Buscar productos..." class="search-bar__input" />
+      </div>
 
-    <meta name="robots" content="index, follow" />
+      <nav class="site-nav">
+        <div class="nav__links">
+          <a href="/index.html" class="nav__link active">INICIO</a>
+          <a href="/pages/offers.html" class="nav__link">OFERTAS</a>
+          <a href="/pages/recomendations.html" class="nav__link">RECOMENDACIONES</a>
+        </div>
 
-    <link rel="canonical" href="https://www.TEKHSTORE.com/" />
-
-    <link
-      rel="alternate"
-      hreflang="es"
-      href="https://www.TEKHSTORE.com/"
-    />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto+Slab:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
-
-    <link rel="stylesheet" href="../css/styles.css" />
-
-    <title>TEKHSTORE: Tienda digital de Videojuegos</title>
-
-    <style>
-      body {
-        background-color: rgb(37, 0, 107);
-        font-family: "Roboto Slab", serif;
-        color: aliceblue;
-      }
-
-      h2 {
-        color: white;
-        text-align: center;
-        font-family: "Orbitron", sans-serif;
-      }
-
-      .site-header {
-        /*display: flex;
-        justify-content: right;*/
-
-        position: sticky;
-        top: 0;
-        height: var(--header-top);
-        z-index: 10;
-
-
-        background-color: rgb(37, 0, 107);
-        font-family: "Orbitron", sans-serif;
-      }
-
-      /* Pseudoelemento */
-      .site-header::before {
-        content: "";
-        display: block;
-        height: 4px;
-        background-color: rgb(150, 100, 255);
-        border-radius: 0px;
-      }
-    </style>
-  </head>
-
-  <body>
-    <header class="site-header">
-      <h1>TEKHSTORE.com</h1>
-
-      <nav>
-        <a href="/index.html" class="nav__link">Inicio</a>
-
-        <a
-          href="/pages/offers.html"
-          class="nav__link"
-          title="Las ofertas de hoy"
-        >
-          Ofertas
-        </a>
-
-        <a
-          href="/pages/recomendations.html"
-          class="nav__link"
-          title="Recomendaciones según tus gustos y búsquedas"
-        >
-          Recomendaciones
-        </a>
-
-        <a
-          href="/pages/profile.html"
-          class="nav__link"
-          title="Accede a las configuraciones de tu perfil"
-        >
-          Perfil
-        </a>
-
-        <!--
-        <a
-          href="https://github.com/hugo24Dff/Proyecto_prog_web"
-          class="nav__link"
-          title="Visita nuestro repositorio de GitHub"
-          target="_blank"
-          rel="noopener"
-        >
-          Repositorio GitHub
-        </a>
-        -->
+        <div class="nav__user-actions">
+          <button class="icon-btn" title="Notificaciones">
+            🔔<span class="badge">3</span>
+          </button>
+          <button class="icon-btn" title="Carrito">🛒</button>
+          <div class="user-profile">
+            <span class="user-profile__avatar">👤</span>
+            <span class="user-profile__name">chopon7</span>
+          </div>
+        </div>
       </nav>
+    </div>
+  </header>
 
-      <hr/>
-    </header>
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="site-main">
+    
+    <!-- BANNER HERO -->
+    <section class="hero-banner">
+      <div class="hero-banner__image-container">
+        <img src="assets/img/star-wars-battlefront-2.jpg" alt="Star Wars Battlefront II" class="hero-banner__image" />
+        <div class="hero-banner__overlay">
+          <a href="#" class="hero-banner__btn"><u> > COMPRAR YA < </u></a>
+        </div>
+      </div>
+    </section>
 
-    <main>
-      <section class="featured-game">
-        <h2><strong>JUEGO DE LA SEMANA</strong></h2>
+    <!-- SECCIÓN JUEGOS POPULARES (TAMAÑO RESTAURADO) -->
+    <section class="games">
+      <header class="trending-section__header">
+        <h2><strong>Juegos Populares</strong></h2>
+        <a href="#" class="btn-view-all">Ver todo ></a>
+      </header>
 
-        <figure class="game-card game-card--featured">
-          <img
-            class="game-card__image"
-            src="assets/img/star-wars-battlefront-2.jpg"
-            alt="Star Wars Battlefront 2"
-            width="1400"
-            height="auto"
-            title="Star Wars Battlefront 2"
-          />
-
+      <!-- Listado con Flexbox (flex-wrap, gap y flex: 1 1 sin márgenes manuales) -->
+      <div class="games__list">
+        <figure class="game-card">
+          <img class="game-card__image" src="assets/img/rainbow-six-siege.jpg" alt="Rainbow Six Siege" width="300" height="175" loading="lazy" title="Rainbow Six Siege" />
           <figcaption class="game-card__caption">
-            Star Wars Battlefront 2
+            Rainbow Six Siege
           </figcaption>
         </figure>
 
-        <h3>
-          <strong><u>Comprar Ahora</u></strong>
-        </h3>
-      </section>
+        <figure class="game-card">
+          <img class="game-card__image" src="assets/img/kof-xv.webp" alt="The King Of Fighters XV" width="300" height="175" loading="lazy" title="The King Of Fighters XV" />
+          <figcaption class="game-card__caption">
+            The King Of Fighters XV
+          </figcaption>
+        </figure>
 
-      <hr />
+        <figure class="game-card">
+          <img class="game-card__image" src="assets/img/arkham-knight.png" alt="Batman Arkham Knight" width="300" height="175" loading="lazy" title="Batman Arkham Knight" />
+          <figcaption class="game-card__caption">
+            Batman Arkham Knight
+          </figcaption>
+        </figure>
+      </div>
+    </section>
 
-      <section class="games">
-        <h2><strong>Juegos Populares</strong></h2>
+  </main>
 
-        <div class="games__list">
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <pre>
+<strong>Universidad Autónoma de Baja California Sur.</strong>
+<strong>Departamento Académico de Sistemas Computacionales.</strong>
+Diseño creado por:
+Emiliano Angulo Martínez.
+Hugo Enrique Gómez Famania.
+Ricardo Álvarez Higuera.
+    </pre>
+  </footer>
 
-          <figure class="game-card">
-            <img
-              class="game-card__image"
-              src="assets/img/rainbow-six-siege.jpg"
-              alt="Rainbow Six Siege"
-              width="300"
-              height="175"
-              loading="lazy"
-              title="Rainbow Six Siege"
-            />
-
-            <figcaption class="game-card__caption">
-              Rainbow Six Siege
-            </figcaption>
-          </figure>
-
-          <figure class="game-card">
-            <img
-              class="game-card__image"
-              src="assets/img/kof-xv.webp"
-              alt="The King Of Fighters XV"
-              width="300"
-              height="175"
-              loading="lazy"
-              title="The King Of Fighters XV"
-            />
-
-            <figcaption class="game-card__caption">
-              The King Of Fighters XV
-            </figcaption>
-          </figure>
-
-          <figure class="game-card">
-            <img
-              class="game-card__image"
-              src="assets/img/arkham-knight.png"
-              alt="Batman Arkham Knight"
-              width="300"
-              height="175"
-              loading="lazy"
-              title="Batman Arkham Knight"
-            />
-
-            <figcaption class="game-card__caption">
-              Batman Arkham Knight
-            </figcaption>
-          </figure>
-
-          <h3 class="games__view-all">
-            <b>Ver todo</b>
-          </h3>
-
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <hr />
-
-      <pre>
-        <strong>Universidad Autónoma de Baja California Sur.</strong>
-        <strong>Departamento Académico de Sistemas Computacionales.</strong>
-        Diseño creado por:
-        Emiliano Angulo Martínez.
-        Hugo Enrique Gómez Famania.
-        Ricardo Álvarez Higuera.
-      </pre>
-    </footer>
-  </body>
+</body>
 </html>
