@@ -5,14 +5,21 @@
   padding: 0;
 }
 
+:root {
+  --primary-color: rgb(63, 0, 184);
+  --secondary-color: rgb(150, 100, 255);
+  --background-color: rgb(37, 0, 107);
+  --text-color: aliceblue;
+}
+
 body {
-  background-color: rgb(37, 0, 107);
-  color: aliceblue;
+  background-color: var(--background-color);
+  color: var(--text-color);
   font-family: 'Roboto Slab', serif;
 }
 
 h2 {
-  color: white;
+  color: var(--text-color);
   font-family: "Orbitron", sans-serif;
 }
 
@@ -29,7 +36,7 @@ h2 {
 
 .site-header {
   grid-area: header;
-  background-color: rgb(37, 0, 107);
+  background-color: var(--background-color);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -39,7 +46,7 @@ h2 {
   content: "";
   display: block;
   height: 4px;
-  background-color: rgb(150, 100, 255);
+  background-color: var(--secondary-color);
 }
 
 .site-main {
@@ -52,9 +59,9 @@ h2 {
 
 .site-footer {
   grid-area: footer;
-  background-color: rgb(30, 30, 30);
+  background-color: rgb(60,60,60);
   padding: 20px;
-  text-align: center;
+  text-align: left;
 }
 
 /* 1. NAVBAR CON FLEXBOX */
@@ -86,10 +93,10 @@ h2 {
   display: flex;
   align-items: center;
   background-color: #0d002a;
-  border: 1px solid rgb(150, 100, 255);
+  border: 1px solid var(--secondary-color);
   border-radius: 6px;
   padding: 6px 12px;
-  width: 300px;
+  width: 800px;
 }
 
 .search-bar__input {
