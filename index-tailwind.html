@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TEKHSTORE | Tailwind</title>
+
+  <!-- CDN práctico para pruebas y demostraciones -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --color-fondo: #25006b;
+      --color-primario: #3f00b8;
+      --color-secundario: #9664ff;
+      --color-acento: #ff2a6d;
+    }
+  </style>
+
+  <style>
+    body {
+      background: #25006b;
+      color: aliceblue;
+      font-family: Arial, sans-serif;
+    }
+
+    .tarjeta-juego {
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .tarjeta-juego:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px #0009;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="sticky top-0 z-50 border-b-2 border-secundario bg-[#0d002a]">
+    <div class="mx-auto flex max-w-7xl flex-col items-stretch
+                justify-between gap-3 p-4 lg:flex-row lg:items-center">
+
+      <a href="#" class="text-2xl font-bold tracking-widest">
+        TEKHSTORE
+      </a>
+
+      <input
+        type="search"
+        placeholder="Buscar videojuegos..."
+        class="w-full rounded-lg bg-white p-3 text-gray-900
+               outline-none focus:ring-2 focus:ring-secundario lg:max-w-md">
+
+      <nav class="flex flex-wrap gap-2">
+        <a href="#" class="rounded-lg border border-secundario
+                          bg-primario px-4 py-2 transition
+                          hover:-translate-y-0.5 hover:bg-[#6428dc]">
+          Inicio
+        </a>
+        <a href="#juegos" class="rounded-lg border border-secundario
+                                bg-primario px-4 py-2 transition
+                                hover:-translate-y-0.5 hover:bg-[#6428dc]">
+          Videojuegos
+        </a>
+        <a href="#contacto" class="rounded-lg border border-secundario
+                                   bg-primario px-4 py-2 transition
+                                   hover:-translate-y-0.5 hover:bg-[#6428dc]">
+          Contacto
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-10">
+    <section class="mb-12 rounded-2xl bg-gradient-to-br
+                    from-primario to-[#0d002a] p-6 sm:p-10">
+      <h1 class="mb-4 text-3xl font-bold sm:text-5xl">
+        Descubre tu próximo juego
+      </h1>
+      <p class="mb-6 text-lg">
+        Explora los mejores videojuegos y encuentra tu próxima aventura.
+      </p>
+      <a href="#juegos"
+         class="inline-block rounded-lg bg-white px-5 py-3
+                font-bold text-primario hover:bg-gray-200">
+        Ver videojuegos
+      </a>
+    </section>
+
+    <section id="juegos">
+      <h2 class="mb-6 border-l-4 border-acento pl-3 text-2xl font-bold">
+        Videojuegos destacados
+      </h2>
+
+      <!-- grid y gap-6 controlan la cuadrícula y sus espacios -->
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <article class="tarjeta-juego overflow-hidden rounded-xl
+                        border-2 border-secundario bg-primario">
+          <img src="/assets/img/arkham-knight.png" alt="Batman"
+               class="h-56 w-full object-cover">
+          <div class="p-4">
+            <h3 class="mb-2 text-xl font-bold">Batman</h3>
+            <p class="mb-4">Batman</p>
+            <a href="#" class="inline-block rounded-lg bg-white
+                               px-4 py-2 font-bold text-primario">
+              Ver juego
+            </a>
+          </div>
+        </article>
+
+        <article class="tarjeta-juego overflow-hidden rounded-xl
+                        border-2 border-secundario bg-primario">
+          <img src="/assets/img/kof-xv.webp" alt="King Of Fighters XV"
+               class="h-56 w-full object-cover">
+          <div class="p-4">
+            <h3 class="mb-2 text-xl font-bold">King Of Fighters XV</h3>
+            <p class="mb-4">Juego de lucha</p>
+            <a href="#" class="inline-block rounded-lg bg-white
+                               px-4 py-2 font-bold text-primario">
+              Ver juego
+            </a>
+          </div>
+        </article>
+
+        <article class="tarjeta-juego overflow-hidden rounded-xl
+                        border-2 border-secundario bg-primario">
+          <img src="/assets/img/rainbow-six-siege.jpg" alt="Rainbow Six Siege"
+               class="h-56 w-full object-cover">
+          <div class="p-4">
+            <h3 class="mb-2 text-xl font-bold">Rainbow Six Siege</h3>
+            <p class="mb-4">Juego de guerra táctica</p>
+            <a href="#" class="inline-block rounded-lg bg-white
+                               px-4 py-2 font-bold text-primario">
+              Ver juego
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <footer id="contacto" class="mt-4 bg-[#3c3c3c] p-6 text-center">
+    TEKHSTORE · Tienda digital de videojuegos
+  </footer>
+</body>
+</html>
