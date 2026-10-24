@@ -1,0 +1,8 @@
+// Ejemplo: Diferencias entre var y let en los bloques
+if (true) {
+    var a = 10;
+    let b = 20;
+}
+
+console.log(a);
+console.log(b);
