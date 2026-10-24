@@ -26,4 +26,6 @@ const total = videojuegos.reduce((acc, { precio }) => acc + precio, 0); // Calcu
 const promedio = total / videojuegos.length; // Calcular el promedio del campo numérico (precio)
 const ordenados = [...videojuegos].sort((a, b) => a.precio - b.precio); // Ordenar por precio de menor a mayor
 
+const categoria = videojuegos[0]?.categoria ?? "Sin categoría";
+
 console.log({ filtrados, total, promedio, ordenados });
