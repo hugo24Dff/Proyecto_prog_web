@@ -12,9 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-
-
-
 document.addEventListener("DOMContentLoaded", () => {
    
     const header = document.querySelector(".header-container");
@@ -70,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnTema.textContent = oscuro ? "🌞" : "🌚";
 
     });
-
 
     const buscador = document.querySelector(".search-bar__input");
     const tarjetas = document.querySelectorAll(".game-card");
