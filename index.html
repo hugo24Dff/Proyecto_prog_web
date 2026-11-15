@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="es" data-theme="light">
 <head>
-  <link rel="stylesheet" href="/css/styles.css" />
   <meta charset="UTF-8" />
   <meta name="description" content="Explora, descarga y disfruta los mejores videojuegos digitales con ofertas exclusivas cada semana." />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css">
-  <script src="js/ejercicioDOM.js" defer></script>
+  <link rel="stylesheet" href="css/catalogo.css">
+  <script type="module" src="js/catalogo.js"></script>
   <title>TEKHSTORE: Tienda digital de Videojuegos</title>
 
 </head>
@@ -25,7 +25,7 @@
 
       <div class="search-bar">
         <span class="search-bar__icon">🔍</span>
-        <input type="text" placeholder="Buscar productos..." class="search-bar__input" />
+        <input id="buscador-juegos" type="search" placeholder="Buscar productos..." class="search-bar__input" aria-label="Buscar videojuegos" />
       </div>
 
       <nav class="site-nav">
@@ -36,9 +36,8 @@
         </div>
 
         <div class="nav__user-actions">
-          <button class="icon-btn" title="Notificaciones">
-            🔔<span class="badge">3</span>
-          </button>
+          <button class="icon-btn" id="ver-favoritos" type="button" title="Ver favoritos">❤️ <span id="contador-favoritos" class="badge">0</span></button>
+          <button class="icon-btn" id="alternar-tema" type="button" title="Cambiar tema" aria-label="Cambiar tema">🌙</button>
           <button class="icon-btn" title="Carrito">🛒</button>
           <a href="/pages/registration.html" class="nav__link">Iniciar Sesión</a>
           <div class="user-profile">   
@@ -70,29 +69,21 @@
         <a href="#" class="btn-view-all">Ver todo ></a>
       </header>
 
-      <!-- Listado con Flexbox (flex-wrap, gap y flex: 1 1 sin márgenes manuales) -->
-      <div class="games__list">
-        <figure class="game-card">
-          <img class="game-card__image" src="assets/img/rainbow-six-siege.jpg" alt="Rainbow Six Siege" width="300" height="175" loading="lazy" title="Rainbow Six Siege" />
-          <figcaption class="game-card__caption">
-            Rainbow Six Siege
-          </figcaption>
-        </figure>
-
-        <figure class="game-card">
-          <img class="game-card__image" src="assets/img/kof-xv.webp" alt="The King Of Fighters XV" width="300" height="175" loading="lazy" title="The King Of Fighters XV" />
-          <figcaption class="game-card__caption">
-            The King Of Fighters XV
-          </figcaption>
-        </figure>
-
-        <figure class="game-card">
-          <img class="game-card__image" src="assets/img/arkham-knight.png" alt="Batman Arkham Knight" width="300" height="175" loading="lazy" title="Batman Arkham Knight" />
-          <figcaption class="game-card__caption">
-            Batman Arkham Knight
-          </figcaption>
-        </figure>
+      <p class="catalogo-ayuda">Explora el catálogo y guarda tus juegos favoritos.</p>
+      <div class="catalogo-controles">
+        <label for="filtro-genero">Filtrar por género:</label>
+        <select id="filtro-genero">
+          <option value="todos">Todos</option>
+        </select>
+        <button id="limpiar-filtro" type="button">Mostrar todos</button>
       </div>
+      <p id="estado-catalogo" class="estado-catalogo" role="status" aria-live="polite">Cargando videojuegos...</p>
+      <div class="catalogo-controles">
+      <button id="reintentar-catalogo" type="button" hidden>
+        Reintentar carga
+      </button>
+      </div>
+      <div id="lista-videojuegos" class="games__list catalogo-grid" aria-live="polite"></div>
     </section>
 
   </main>
