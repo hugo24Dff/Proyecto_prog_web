@@ -1,4 +1,17 @@
-import { fileURLToPath } from 'node:url';
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+    server: {
+        proxy: {
+            '/api': {
+                target: 'http://127.0.0.1:8000',
+                changeOrigin: true
+            }
+        }
+    }
+});
+
+/*import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -12,3 +25,4 @@ export default defineConfig({
     }
   }
 });
+*/

@@ -1,0 +1,18 @@
+[
+    {
+        "id": 5,
+        "titulo": "Elden Ring",
+        "genero": "RPG",
+        "precio": 899,
+        "descripcion": "Explora un mundo abierto lleno de aventuras.",
+        "imagen": "assets\/img\/elden-ring.jpg"
+    },
+    {
+        "id": 6,
+        "titulo": "Minecraft",
+        "genero": "Supervivencia",
+        "precio": 599,
+        "descripcion": "Construye y explora un mundo lleno de posibilidades.",
+        "imagen": "assets\/img\/minecraft.jpg"
+    }
+]

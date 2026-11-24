@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-const URL_VIDEOJUEGOS = `${import.meta.env.BASE_URL}data/videojuegos.json`;
+const URL_VIDEOJUEGOS = '/api/videojuegos.php';
 const CLAVE_FAVORITOS = 'tekhstore_favoritos';
 const CLAVE_TEMA = 'tekhstore_tema';
 
@@ -160,39 +160,76 @@ function aplicarTema(tema) {
   botonTema.textContent = tema === 'dark' ? '☀️' : '🌙';
 }
 
+
 async function cargarVideojuegos() {
-  botonReintentar.hidden = true;
-  controlesCatalogo.forEach(control => { control.disabled = true; });
-  contenedor.setAttribute('aria-busy', 'true');
+
   estado.textContent = 'Cargando videojuegos...';
-  contenedor.replaceChildren();
+
   try {
+
     const respuesta = await fetch(URL_VIDEOJUEGOS);
-    if (!respuesta.ok) throw new Error(`Error HTTP ${respuesta.status}`);
+
     const datos = await respuesta.json();
-    const datosValidos = Array.isArray(datos) && datos.every(juego =>
-      juego && Number.isInteger(juego.id) && Number.isFinite(juego.precio)
-      && ['titulo', 'genero', 'descripcion', 'imagen'].every(campo => typeof juego[campo] === 'string')
-    );
-    if (!datosValidos) throw new Error('El archivo JSON no tiene el formato esperado.');
+
+    if (!respuesta.ok) {
+      throw new Error(
+        datos.error || `Error HTTP ${respuesta.status}`
+      );
+    }
+
+    if (!Array.isArray(datos)) {
+      throw new Error(
+        'La API devolvió un formato incorrecto.'
+      );
+    }
+
     videojuegos = datos;
 
-    filtroGenero.options.length = 1;
-    const generos = [...new Set(videojuegos.map(juego => juego.genero))];
+    // Limpiar las opciones anteriores
+    filtroGenero.replaceChildren();
+
+    const opcionTodos = document.createElement('option');
+
+    opcionTodos.value = 'todos';
+    opcionTodos.textContent = 'Todos';
+
+    filtroGenero.appendChild(opcionTodos);
+
+    // Obtener géneros sin repetir
+    const generos = [
+      ...new Set(
+        videojuegos.map(juego => juego.genero)
+      )
+    ];
+
     generos.forEach(genero => {
+
       const opcion = document.createElement('option');
+
       opcion.value = genero;
       opcion.textContent = genero;
+
       filtroGenero.appendChild(opcion);
     });
+
     renderizarCatalogo();
-    controlesCatalogo.forEach(control => { control.disabled = false; });
+
+    return true;
+
   } catch (error) {
-    console.error('No se pudo cargar el catálogo:', error);
-    estado.textContent = 'No se pudieron cargar los videojuegos. Comprueba que el servidor esté activo y reintenta la carga.';
-    botonReintentar.hidden = false;
-  } finally {
-    contenedor.setAttribute('aria-busy', 'false');
+
+    console.error(error);
+
+    estado.textContent =
+      'No fue posible cargar los videojuegos.';
+
+    await Swal.fire({
+      icon: 'error',
+      title: 'Error al cargar el catálogo',
+      text: error.message
+    });
+
+    return false;
   }
 }
 
@@ -231,3 +268,91 @@ const temaGuardado = leerJSON(CLAVE_TEMA, 'light');
 aplicarTema(temaGuardado === 'dark' ? 'dark' : 'light');
 actualizarContador(obtenerFavoritos());
 cargarVideojuegos();
+
+
+const formularioVideojuego =
+    document.getElementById('form-videojuego');
+
+formularioVideojuego.addEventListener(
+    'submit',
+    async (evento) => {
+
+        // Evitar recargar la página
+        evento.preventDefault();
+
+        const datos = new FormData(formularioVideojuego);
+
+        const nuevoVideojuego = {
+            titulo: datos.get('titulo').trim(),
+            genero: datos.get('genero').trim(),
+            precio: Number(datos.get('precio')),
+            descripcion: datos.get('descripcion').trim(),
+            imagen: datos.get('imagen').trim()
+        };
+
+        const boton = formularioVideojuego.querySelector(
+            'button[type="submit"]'
+        );
+
+        boton.disabled = true;
+
+        try {
+
+            const respuesta = await fetch(URL_VIDEOJUEGOS, {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify(nuevoVideojuego)
+            });
+
+            const resultado = await respuesta.json();
+
+            if (!respuesta.ok) {
+                throw new Error(
+                    resultado.error || 'Error al registrar.'
+                );
+            }
+
+            // Limpiar formulario
+            formularioVideojuego.reset();
+
+            // Restablecer filtros
+            buscador.value = '';
+            filtroGenero.value = 'todos';
+            soloFavoritos = false;
+
+            botonFavoritos.setAttribute(
+                'aria-pressed',
+                'false'
+            );
+
+            botonFavoritos.title = 'Ver favoritos';
+
+            // Actualizar catálogo sin recargar
+            const actualizado = await cargarVideojuegos();
+
+            await Swal.fire({
+                icon: actualizado ? 'success' : 'warning',
+                title: 'Videojuego registrado',
+                text: actualizado
+                    ? `${resultado.titulo} fue agregado correctamente.`
+                    : 'Se guardó el videojuego, pero no se pudo actualizar la lista.'
+            });
+
+        } catch (error) {
+
+            await Swal.fire({
+                icon: 'error',
+                title: 'No se pudo registrar',
+                text: error.message
+            });
+
+        } finally {
+
+            boton.disabled = false;
+        }
+    }
+);
