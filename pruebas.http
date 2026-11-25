@@ -1,0 +1,108 @@
+@host = http://localhost:8000
+@api = {{host}}/api/videojuegos.php
+@id = 5
+
+### 1. Consultar todos - 200
+GET {{api}}
+
+
+### 2. Consultar por ID - 200
+GET {{api}}?id=1
+
+
+### 3. Buscar videojuego - 200
+GET {{api}}?buscar=Batman
+
+
+### 4. Crear videojuego - 201
+POST {{api}}
+Content-Type: application/json
+
+{
+    "titulo": "Minecraft",
+    "genero": "Supervivencia",
+    "precio": 599,
+    "descripcion": "Explora y construye en un mundo abierto.",
+    "imagen": "assets/img/minecraft.jpg"
+}
+
+
+### 5. Consultar videojuego creado - 200
+GET {{api}}?id={{id}}
+
+
+### 6. Actualizar videojuego - 200
+PUT {{api}}?id={{id}}
+Content-Type: application/json
+
+{
+    "titulo": "Minecraft",
+    "genero": "Supervivencia",
+    "precio": 299,
+    "descripcion": "Explora y construye en un mundo abierto.",
+    "imagen": "assets/img/minecraft.jpg"
+}
+
+
+### 7. Eliminar videojuego - 204
+DELETE {{api}}?id={{id}}
+
+
+### 8. Consultar videojuego eliminado - 404
+GET {{api}}?id={{id}}
+
+
+### 9. Consultar videojuego inexistente - 404
+GET {{api}}?id=99999
+
+
+### 10. Crear videojuego sin título - 422
+POST {{api}}
+Content-Type: application/json
+
+{
+    "titulo": "",
+    "genero": "Accion",
+    "precio": 300,
+    "descripcion": "Juego de prueba",
+    "imagen": "assets/img/prueba.jpg"
+}
+
+
+### 11. Crear videojuego con precio negativo - 422
+POST {{api}}
+Content-Type: application/json
+
+{
+    "titulo": "Juego de prueba",
+    "genero": "Accion",
+    "precio": -100,
+    "descripcion": "Juego de prueba",
+    "imagen": "assets/img/prueba.jpg"
+}
+
+
+### 12. Eliminar sin proporcionar ID - 422
+DELETE {{api}}
+
+
+### 13. Consultar ID inválido - 422
+GET {{api}}?id=abc
+
+
+### 14. Método no permitido - 405
+PATCH {{api}}
+Content-Type: application/json
+
+{
+    "precio": 100
+}
+
+
+### 15. JSON incorrecto - 400
+POST {{api}}
+Content-Type: application/json
+
+{
+    "titulo":
+}

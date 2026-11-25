@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
+import { obtenerVideojuegos } from './api.js';
 
-const URL_VIDEOJUEGOS = '/api/videojuegos.php';
 const CLAVE_FAVORITOS = 'tekhstore_favoritos';
 const CLAVE_TEMA = 'tekhstore_tema';
 
@@ -161,77 +161,67 @@ function aplicarTema(tema) {
 }
 
 
+
 async function cargarVideojuegos() {
 
-  estado.textContent = 'Cargando videojuegos...';
+    estado.textContent = 'Cargando videojuegos...';
 
-  try {
+    contenedor.replaceChildren();
 
-    const respuesta = await fetch(URL_VIDEOJUEGOS);
+    try {
 
-    const datos = await respuesta.json();
+        const datos = await obtenerVideojuegos();
 
-    if (!respuesta.ok) {
-      throw new Error(
-        datos.error || `Error HTTP ${respuesta.status}`
-      );
+        if (!Array.isArray(datos)) {
+
+            throw new Error(
+                'La API no tiene el formato esperado'
+            );
+        }
+
+        videojuegos = datos;
+
+        // Limpiar las opciones anteriores
+        filtroGenero.replaceChildren(
+            new Option('Todos', 'todos')
+        );
+
+        const generos = [
+            ...new Set(
+                videojuegos.map(juego => juego.genero)
+            )
+        ];
+
+        generos.forEach(genero => {
+
+            const opcion = document.createElement('option');
+
+            opcion.value = genero;
+            opcion.textContent = genero;
+
+            filtroGenero.appendChild(opcion);
+        });
+
+        renderizarCatalogo();
+
+    } catch (error) {
+
+        console.error(
+            'No se pudo cargar el catálogo:',
+            error
+        );
+
+        estado.textContent =
+            'No fue posible cargar los videojuegos.';
+
+        await Swal.fire({
+            icon: 'error',
+            title: 'Error al cargar el catálogo',
+            text: 'Comprueba que PHP y MySQL estén funcionando.'
+        });
     }
-
-    if (!Array.isArray(datos)) {
-      throw new Error(
-        'La API devolvió un formato incorrecto.'
-      );
-    }
-
-    videojuegos = datos;
-
-    // Limpiar las opciones anteriores
-    filtroGenero.replaceChildren();
-
-    const opcionTodos = document.createElement('option');
-
-    opcionTodos.value = 'todos';
-    opcionTodos.textContent = 'Todos';
-
-    filtroGenero.appendChild(opcionTodos);
-
-    // Obtener géneros sin repetir
-    const generos = [
-      ...new Set(
-        videojuegos.map(juego => juego.genero)
-      )
-    ];
-
-    generos.forEach(genero => {
-
-      const opcion = document.createElement('option');
-
-      opcion.value = genero;
-      opcion.textContent = genero;
-
-      filtroGenero.appendChild(opcion);
-    });
-
-    renderizarCatalogo();
-
-    return true;
-
-  } catch (error) {
-
-    console.error(error);
-
-    estado.textContent =
-      'No fue posible cargar los videojuegos.';
-
-    await Swal.fire({
-      icon: 'error',
-      title: 'Error al cargar el catálogo',
-      text: error.message
-    });
-
-    return false;
-  }
 }
+
 
 buscador.addEventListener('input', renderizarCatalogo);
 filtroGenero.addEventListener('change', renderizarCatalogo);

@@ -1,4 +1,27 @@
+
 import { defineConfig } from 'vite';
+
+export default defineConfig({
+
+    server: {
+
+        port: 5173,
+
+        strictPort: true,
+
+        proxy: {
+
+            '/api': {
+
+                target: 'http://localhost:8000',
+
+                changeOrigin: true
+            }
+        }
+    }
+});
+
+/*import { defineConfig } from 'vite';
 
 export default defineConfig({
     server: {
@@ -11,7 +34,7 @@ export default defineConfig({
     }
 });
 
-/*import { fileURLToPath } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 
 export default defineConfig({

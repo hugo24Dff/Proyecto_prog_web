@@ -1,211 +1,232 @@
-
 <?php
 
-require __DIR__ . '/helpers.php';
+require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/db.php';
 
 $metodo = $_SERVER['REQUEST_METHOD'];
 
-if (!in_array($metodo, ['GET', 'POST'], true)) {
-    header('Allow: GET, POST');
+try {
 
-    responder([
-        "error" => "Método no permitido."
-    ], 405);
-}
+    $pdo = conectar();
 
-// Cargar los videojuegos iniciales
-$iniciales = require __DIR__ . '/data/videojuegos.php';
+    switch ($metodo) {
 
-// Ruta del archivo de almacenamiento
-$archivo = __DIR__ . '/data/nuevos.json';
+        // ==================================
+        // READ - CONSULTAR VIDEOJUEGOS
+        // ==================================
 
-// Abrir el archivo para lectura y escritura
-$fp = @fopen($archivo, 'c+');
+        case 'GET':
 
-if (!$fp) {
-    responder([
-        "error" => "No se pudo abrir el archivo de datos."
-    ], 500);
-}
+            // Consultar un videojuego por ID
+            if (isset($_GET['id'])) {
 
-// Bloquear el archivo mientras se utiliza
-if (!flock($fp, $metodo === 'POST' ? LOCK_EX : LOCK_SH)) {
-    responder([
-        "error" => "No se pudo acceder a los datos."
-    ], 500);
-}
+                $id = validarId();
 
-$contenido = stream_get_contents($fp);
+                $stmt = $pdo->prepare(
+                    'SELECT * FROM videojuegos
+                     WHERE id = :id'
+                );
 
-$nuevos = $contenido === ''
-    ? []
-    : json_decode($contenido, true);
+                $stmt->execute([
+                    'id' => $id
+                ]);
 
-if (!is_array($nuevos)) {
-    responder([
-        "error" => "El archivo de datos es inválido."
-    ], 500);
-}
+                $juego = $stmt->fetch();
 
-// Combinar videojuegos iniciales y nuevos
-$videojuegos = array_merge($iniciales, $nuevos);
+                if (!$juego) {
+                    responder([
+                        'error' => 'Videojuego no encontrado'
+                    ], 404);
+                }
 
-
-// ======================================
-// GET: CONSULTAR VIDEOJUEGOS
-// ======================================
-
-if ($metodo === 'GET') {
-
-    if (isset($_GET['id'])) {
-
-        $id = filter_var(
-            $_GET['id'],
-            FILTER_VALIDATE_INT
-        );
-
-        foreach ($videojuegos as $juego) {
-
-            if ($juego['id'] === $id) {
-                responder($juego, 200);
+                responder(formatearVideojuego($juego));
             }
-        }
 
-        responder([
-            "error" => "Videojuego no encontrado."
-        ], 404);
-    }
+            // Buscar videojuegos por título
+            $buscar = $_GET['buscar'] ?? '';
 
-    responder($videojuegos, 200);
-}
+            if (!is_string($buscar)) {
+                responder([
+                    'error' => 'Búsqueda inválida'
+                ], 422);
+            }
 
+            $buscar = trim($buscar);
 
-// ======================================
-// POST: REGISTRAR VIDEOJUEGO
-// ======================================
+            if ($buscar !== '') {
 
-if ($metodo === 'POST') {
+                $stmt = $pdo->prepare(
+                    'SELECT * FROM videojuegos
+                     WHERE titulo LIKE :buscar
+                     ORDER BY id'
+                );
 
-    $datos = json_decode(
-        file_get_contents('php://input'),
-        true
-    );
+                $stmt->execute([
+                    'buscar' => "%$buscar%"
+                ]);
 
-    if (!is_array($datos)) {
-        responder([
-            "error" => "Debes enviar un JSON válido."
-        ], 422);
-    }
+            } else {
 
-    // Obtener y validar los campos de texto
-    $campos = [
-        'titulo',
-        'genero',
-        'descripcion',
-        'imagen'
-    ];
+                // Consultar todos los videojuegos
+                $stmt = $pdo->prepare(
+                    'SELECT * FROM videojuegos ORDER BY id'
+                );
 
-    foreach ($campos as $campo) {
+                $stmt->execute();
+            }
 
-        if (!isset($datos[$campo]) ||
-            !is_string($datos[$campo]) ||
-            trim($datos[$campo]) === '') {
+            $videojuegos = $stmt->fetchAll();
+
+            responder(
+                array_map(
+                    'formatearVideojuego',
+                    $videojuegos
+                )
+            );
+
+            break;
+            
+
+        // ==================================
+        // CREATE - REGISTRAR VIDEOJUEGO
+        // ==================================
+
+        case 'POST':
+
+            $datos = validarVideojuego(leerJson());
+
+            $stmt = $pdo->prepare(
+                'INSERT INTO videojuegos
+                    (titulo, genero, precio,
+                     descripcion, imagen)
+                 VALUES
+                    (:titulo, :genero, :precio,
+                     :descripcion, :imagen)'
+            );
+
+            $stmt->execute($datos);
+
+            $id = (int) $pdo->lastInsertId();
 
             responder([
-                "error" => "El campo $campo es obligatorio."
-            ], 422);
-        }
+                'id' => $id,
+                ...$datos
+            ], 201);
 
-        $datos[$campo] = trim($datos[$campo]);
+            break;
+
+
+        // ==================================
+        // UPDATE - ACTUALIZAR VIDEOJUEGO
+        // ==================================
+
+        case 'PUT':
+
+            $id = validarId();
+
+            $datos = validarVideojuego(leerJson());
+
+            // Verificar que el videojuego exista
+            $existe = $pdo->prepare(
+                'SELECT id FROM videojuegos
+                 WHERE id = :id'
+            );
+
+            $existe->execute([
+                'id' => $id
+            ]);
+
+            if (!$existe->fetch()) {
+
+                responder([
+                    'error' => 'Videojuego no encontrado'
+                ], 404);
+            }
+
+            // Actualizar videojuego
+            $stmt = $pdo->prepare(
+                'UPDATE videojuegos
+                 SET titulo = :titulo,
+                     genero = :genero,
+                     precio = :precio,
+                     descripcion = :descripcion,
+                     imagen = :imagen
+                 WHERE id = :id'
+            );
+
+            $stmt->execute([
+                ...$datos,
+                'id' => $id
+            ]);
+
+            responder([
+                'id' => $id,
+                ...$datos
+            ], 200);
+
+            break;
+
+
+        // ==================================
+        // DELETE - ELIMINAR VIDEOJUEGO
+        // ==================================
+
+        case 'DELETE':
+
+            $id = validarId();
+
+            try {
+
+                $stmt = $pdo->prepare(
+                    'DELETE FROM videojuegos
+                     WHERE id = :id'
+                );
+
+                $stmt->execute([
+                    'id' => $id
+                ]);
+
+            } catch (PDOException $e) {
+
+                if ($e->getCode() === '23000') {
+
+                    responder([
+                        'error' => 'El videojuego está relacionado con otros registros'
+                    ], 409);
+                }
+
+                throw $e;
+            }
+
+            if ($stmt->rowCount() === 0) {
+
+                responder([
+                    'error' => 'Videojuego no encontrado'
+                ], 404);
+            }
+
+            http_response_code(204);
+            exit;
+
+
+        // ==================================
+        // MÉTODO NO PERMITIDO
+        // ==================================
+
+        default:
+
+            header('Allow: GET, POST, PUT, DELETE');
+
+            responder([
+                'error' => 'Método no permitido'
+            ], 405);
     }
 
-    $titulo = $datos['titulo'];
-    $genero = $datos['genero'];
-    $precio = $datos['precio'] ?? null;
-    $descripcion = $datos['descripcion'];
-    $imagen = $datos['imagen'];
+} catch (Throwable $e) {
 
-    // Validar longitud del título
-    if (strlen($titulo) < 3) {
-        responder([
-            "error" => "El título debe tener al menos 3 caracteres."
-        ], 422);
-    }
+    error_log($e->getMessage());
 
-    // Validar precio
-    if (!is_numeric($precio) ||
-        !is_finite((float) $precio) ||
-        $precio <= 0) {
-
-        responder([
-            "error" => "El precio debe ser un número mayor a cero."
-        ], 422);
-    }
-
-    // Validar descripción
-    if (strlen($descripcion) < 10) {
-        responder([
-            "error" => "La descripción debe tener al menos 10 caracteres."
-        ], 422);
-    }
-
-    // Validar ruta local de imagen o URL HTTPS
-    $rutaLocal = preg_match(
-        '~^assets/img/[a-zA-Z0-9_-]+\.(jpg|jpeg|png|webp|gif)$~i',
-        $imagen
-    );
-
-    $urlValida = filter_var(
-        $imagen,
-        FILTER_VALIDATE_URL
-    ) && parse_url($imagen, PHP_URL_SCHEME) === 'https';
-
-    if (!$rutaLocal && !$urlValida) {
-        responder([
-            "error" => "Ingresa una ruta de imagen válida o una URL HTTPS."
-        ], 422);
-    }
-
-    // Generar ID automáticamente
-    $ultimoId = max(array_column($videojuegos, 'id'));
-
-    $nuevo = [
-        "id" => $ultimoId + 1,
-        "titulo" => $titulo,
-        "genero" => $genero,
-        "precio" => (float) $precio,
-        "descripcion" => $descripcion,
-        "imagen" => $imagen
-    ];
-
-    // Agregar al arreglo de nuevos registros
-    $nuevos[] = $nuevo;
-
-    $json = json_encode(
-        $nuevos,
-        JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
-    );
-
-    if ($json === false) {
-        responder([
-            "error" => "No se pudieron convertir los datos a JSON."
-        ], 500);
-    }
-
-    // Guardar los nuevos registros
-    rewind($fp);
-
-    if (!ftruncate($fp, 0) ||
-        fwrite($fp, $json) !== strlen($json) ||
-        !fflush($fp)) {
-
-        responder([
-            "error" => "No se pudo guardar el videojuego."
-        ], 500);
-    }
-
-    flock($fp, LOCK_UN);
-    fclose($fp);
-
-    responder($nuevo, 201);
+    responder([
+        'error' => 'Error interno del servidor'
+    ], 500);
 }
